@@ -15,10 +15,15 @@ module.exports = function linter(css, options) {
     wait = false
   }
 
+  function handleError(error) {
+    wait = false
+    console.error(error)
+  }
+
   processor
     .process(css, { from: options.codeFilename })
     .then(resolved)
-    .catch(resolved)
+    .catch(handleError)
 
   loopWhile(() => wait)
 }
